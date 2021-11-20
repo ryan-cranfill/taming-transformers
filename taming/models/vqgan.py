@@ -2,12 +2,12 @@ import torch
 import torch.nn.functional as F
 import pytorch_lightning as pl
 
-from main import instantiate_from_config
-
+from taming.util import instantiate_from_config
 from taming.modules.diffusionmodules.model import Encoder, Decoder
 from taming.modules.vqvae.quantize import VectorQuantizer2 as VectorQuantizer
 from taming.modules.vqvae.quantize import GumbelQuantize
 from taming.modules.vqvae.quantize import EMAVectorQuantizer
+
 
 class VQModel(pl.LightningModule):
     def __init__(self,
@@ -401,4 +401,4 @@ class EMAVQ(VQModel):
                                   lr=lr, betas=(0.5, 0.9))
         opt_disc = torch.optim.Adam(self.loss.discriminator.parameters(),
                                     lr=lr, betas=(0.5, 0.9))
-        return [opt_ae, opt_disc], []                                           
+        return [opt_ae, opt_disc], []
